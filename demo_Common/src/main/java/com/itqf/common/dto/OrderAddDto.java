@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * projectName: demo_end
@@ -18,12 +19,12 @@ import java.util.Date;
 @NoArgsConstructor
 public class OrderAddDto {
 
-    private Integer aid ;
-    private Integer skuid ;
+//    private int type;//标记位 1.立即购买 2.购物车
+
     private Integer uid ;
-    private Integer scount ;
-    private Double totalmoney ;
-    private Double paymoney ;
-    private Double freemoney ;
+    private Integer aid ;
+    private List<GoodsDto> list ;
+
+    private String skuids;//skuid-skuid
 
 }

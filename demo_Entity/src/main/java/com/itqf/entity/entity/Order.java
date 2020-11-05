@@ -1,6 +1,8 @@
 package com.itqf.entity.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -12,9 +14,11 @@ import java.util.Date;
  * description:
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Order {
 
-    private Integer id ;
+    private String id ;
     private Integer aid ;
     private Integer uid ;
     private Double totalmoney ;
@@ -24,12 +28,10 @@ public class Order {
     private Date ctime ;
     private Date uitme ;
 
-    public Order(Integer aid, Integer uid, Double totalmoney, Double paymoney, Double freemoney, Integer flag) {
+    public Order(String id, Integer aid, Integer uid , int flag) {
+        this.id = id;
         this.aid = aid;
         this.uid = uid;
-        this.totalmoney = totalmoney;
-        this.paymoney = paymoney;
-        this.freemoney = freemoney;
-        this.flag = flag;
+        this.flag = flag ;
     }
 }

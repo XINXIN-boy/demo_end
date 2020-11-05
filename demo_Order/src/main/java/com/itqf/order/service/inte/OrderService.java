@@ -1,6 +1,7 @@
 package com.itqf.order.service.inte;
 
 import com.itqf.common.dto.OrderAddDto;
+import com.itqf.common.dto.OrderGoodsAdd;
 import com.itqf.common.dto.OrderSelectDto;
 import com.itqf.common.dto.OrderUpdateDto;
 import com.itqf.common.vo.JsonResult;
@@ -14,7 +15,10 @@ import com.itqf.common.vo.JsonResult;
  */
 public interface OrderService {
 
-    //添加订单
+    //下单-商品
+    JsonResult GoodsAdd(OrderGoodsAdd orderGoodsAdd);
+
+    //添加订单     //下单-购物车  多个商品  的处理
     JsonResult add(OrderAddDto orderAddDto);
 
     //修改 订单

@@ -22,7 +22,7 @@ public class RedissonUtil {
         //配置
         Config config=new Config();
         config.setThreads(1000);
-        config.useSingleServer().setAddress("redis://121.37.137.212:6380");
+        config.useSingleServer().setAddress("redis://121.37.137.212:6379");
         client=Redisson.create(config);
     }
     //新增

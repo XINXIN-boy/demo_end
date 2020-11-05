@@ -3,10 +3,17 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.itqf.order.dao">
+<mapper namespace="com.itqf.order.dao.OrderDao">
+
+<!--    <insert id="insert" parameterType="com.itqf.entity.entity.Order" >-->
+<!--        insert into `order`-->
+<!--        (id , aid,uid,totalmoney ,paymoney , freemoney ,flag,ctime , utime)-->
+<!--        value-->
+<!--        (#{id},#{aid},#{uid},#{totalmoney},#{paymoney},#{freemoney},#{flag},now(),now())-->
+<!--    </insert>-->
 
     <update id="updateOrder" parameterType="com.itqf.common.dto.CarUpdateDto">
-        update order
+        update `order`
         <set>
             <if test="aid != null">
                 `aid` = #{aid},

@@ -3,7 +3,16 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.itqf.order.dao">
+<mapper namespace="com.itqf.order.dao.OrderitemDao">
+    
+    <insert id="insertBatch" parameterType="list">
+       insert into orderitem
+        (oid , skuid ,scount ,price ,ctime) 
+        values
+        <foreach collection="list" item="oi" separator="," open="("  close=")">
+            #{oi.oid},#{oi.skuid},#{oi.scount},#{oi.price},now()
+        </foreach>
+    </insert>
 
     <update id="update" parameterType="com.itqf.common.dto.OrderitemUpdateDto">
         update orderitem

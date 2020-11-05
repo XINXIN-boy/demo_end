@@ -15,13 +15,13 @@ import java.util.Date;
 public class Orderitem {
 
     private Integer id ;
-    private Integer oid ;
+    private String oid ;
     private Integer skuid ;
     private Integer scount ;
     private Double price ;
     private Date ctime ;
 
-    public Orderitem(Integer oid, Integer skuid, Integer scount, Double price) {
+    public Orderitem(String oid, Integer skuid, Integer scount, Double price) {
         this.oid = oid;
         this.skuid = skuid;
         this.scount = scount;

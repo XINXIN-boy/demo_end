@@ -6,14 +6,15 @@ import lombok.Data;
  * projectName: demo_end
  *
  * @author: xinxin
- * time:  2020/11/512:58
- * description:
+ * time:  2020/11/516:42
+ * description: 商页直接下单的
  */
 @Data
-public class OrderitemAddDto {
-    private Integer oid ;
+public class OrderGoodsAdd {
+
+    private Integer aid ;
+    private Integer uid ;
     private Integer skuid ;
     private Integer scount ;
-    private Double price ;
 
 }

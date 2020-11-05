@@ -24,6 +24,8 @@ public interface OrderitemDao {
     @Insert("insert into orderitem (oid , skuid ,scount ,price ,ctime) value (#{oid},#{skuid},#{scount},#{price},now())")
     int insert(Orderitem orderitem);
 
+    int insertBatch(List<Orderitem> list);
+
     @Delete("delete from orderitem where id = #{id}")
     int del(int id);
 
