@@ -6,6 +6,7 @@
     <modules>
         <module>demo_ShopingCar</module>
         <module>demo_Common</module>
+        <module>demo_Entity</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

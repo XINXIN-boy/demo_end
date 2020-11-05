@@ -19,6 +19,17 @@
                 <version>2.2.3.RELEASE</version>
             </dependency>
 
+        <dependency>
+            <groupId>com.itqf</groupId>
+            <artifactId>demo_Entity</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.itqf</groupId>
+            <artifactId>demo_Common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 
     </dependencies>
 

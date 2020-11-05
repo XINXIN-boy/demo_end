@@ -20,6 +20,12 @@
             <version>3.3.0</version>
         </dependency>
 
+        <!--  redisson 该依赖主要用来操作redis  -->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+            <version>3.13.4</version>
+        </dependency>
 
 
 
