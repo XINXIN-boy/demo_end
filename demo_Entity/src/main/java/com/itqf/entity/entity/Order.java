@@ -24,14 +24,12 @@ public class Order {
     private Date ctime ;
     private Date uitme ;
 
-    public Order(Integer aid, Integer uid, Double totalmoney, Double paymoney, Double freemoney, Integer flag, Date ctime, Date uitme) {
+    public Order(Integer aid, Integer uid, Double totalmoney, Double paymoney, Double freemoney, Integer flag) {
         this.aid = aid;
         this.uid = uid;
         this.totalmoney = totalmoney;
         this.paymoney = paymoney;
         this.freemoney = freemoney;
         this.flag = flag;
-        this.ctime = ctime;
-        this.uitme = uitme;
     }
 }

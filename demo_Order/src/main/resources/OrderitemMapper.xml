@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itqf.order.dao">
+
+    <update id="update" parameterType="com.itqf.common.dto.OrderitemUpdateDto">
+        update orderitem
+        <set>
+            <if test="skuid != null">
+                `skuid` = #{skuid},
+            </if>
+            <if test="scount != null">
+                scount = #{scount},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>

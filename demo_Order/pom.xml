@@ -9,28 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>demo_ShopingCar</artifactId>
+    <artifactId>demo_Order</artifactId>
 
     <dependencies>
-            <!-- https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-discovery -->
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-                <version>2.2.3.RELEASE</version>
-            </dependency>
-
-        <dependency>
-            <groupId>com.itqf</groupId>
-            <artifactId>demo_Entity</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.itqf</groupId>
-            <artifactId>demo_Common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
 
         <dependency>
             <groupId>mysql</groupId>
@@ -59,11 +40,17 @@
 
 
 
+        <dependency>
+            <groupId>com.itqf</groupId>
+            <artifactId>demo_Entity</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 
-
-
-
-
+        <dependency>
+            <groupId>com.itqf</groupId>
+            <artifactId>demo_Common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 </project>

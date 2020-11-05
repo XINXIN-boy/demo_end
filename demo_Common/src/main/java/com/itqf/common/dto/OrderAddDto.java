@@ -19,7 +19,9 @@ import java.util.Date;
 public class OrderAddDto {
 
     private Integer aid ;
+    private Integer skuid ;
     private Integer uid ;
+    private Integer scount ;
     private Double totalmoney ;
     private Double paymoney ;
     private Double freemoney ;

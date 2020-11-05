@@ -1,6 +1,7 @@
 package com.itqf.shopingcar.service.inte;
 
 import com.itqf.common.dto.CarAddDto;
+import com.itqf.common.dto.CarUpdateDto;
 import com.itqf.common.vo.JsonResult;
 
 /**
@@ -17,7 +18,9 @@ public interface CarService {
     //购物车的删除
     JsonResult del (int id);
     //购物车数量的+
-    JsonResult plus(CarAddDto dto);
+    JsonResult plus(CarUpdateDto dto);
     //购物车数量的—
-    JsonResult subtract(CarAddDto dto);
+    JsonResult subtract(CarUpdateDto dto);
+
+
 }

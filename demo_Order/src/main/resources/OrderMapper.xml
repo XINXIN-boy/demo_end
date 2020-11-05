@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itqf.order.dao">
+
+    <update id="updateOrder" parameterType="com.itqf.common.dto.CarUpdateDto">
+        update order
+        <set>
+            <if test="aid != null">
+                `aid` = #{aid},
+            </if>
+            <if test="totalmoney != null">
+                totalmoney = #{totalmoney},
+            </if>
+            <if test="paymoney != null">
+                paymoney = #{paymoney},
+            </if>
+            <if test="freemoney != null">
+                `freemoney` = #{freemoney},
+            </if>
+            <if test="flag != null">
+                `flag` = #{flag},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>

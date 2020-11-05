@@ -21,11 +21,10 @@ public class Orderitem {
     private Double price ;
     private Date ctime ;
 
-    public Orderitem(Integer oid, Integer skuid, Integer scount, Double price, Date ctime) {
+    public Orderitem(Integer oid, Integer skuid, Integer scount, Double price) {
         this.oid = oid;
         this.skuid = skuid;
         this.scount = scount;
         this.price = price;
-        this.ctime = ctime;
     }
 }
