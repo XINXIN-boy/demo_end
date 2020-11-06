@@ -2,6 +2,7 @@ package com.itqf.entity.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Date;
  * description:
  */
 @Data
-public class Orderitem {
+public class Orderitem  implements Serializable {
 
     private Integer id ;
     private String oid ;

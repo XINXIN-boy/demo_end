@@ -63,6 +63,9 @@ public class RedissonUtil {
     public static String getStr(String key){
         return client.getBucket(key).get().toString();
     }
+    public static Object getStrObj(String key){
+        return client.getBucket(key).get();
+    }
     public static Set<Object> getSet(String key){
         return client.getSet(key).readAll();
     }
@@ -80,8 +83,11 @@ public class RedissonUtil {
     public static boolean checkZSet(String key,Object val){
         return client.getScoredSortedSet(key).contains(val);
     }
-    public static boolean checkKey(String key){
-        return client.getKeys().countExists(key)>0;
+    public static boolean checkKey(String... keys){
+        return client.getKeys().countExists(keys)>0;
+    }
+    public static boolean checkKeyPat(String key){
+        return client.getKeys().getKeysByPattern(key)!=null;
     }
     public static boolean checkField(String key,String f){
         return client.getMap(key).containsKey(f);

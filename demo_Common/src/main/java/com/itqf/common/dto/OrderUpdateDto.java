@@ -1,6 +1,8 @@
 package com.itqf.common.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * projectName: demo_end
@@ -10,6 +12,8 @@ import lombok.Data;
  * description:
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderUpdateDto {
 
     private Integer id ;
@@ -19,4 +23,8 @@ public class OrderUpdateDto {
     private Double freemoney ;
     private Integer flag ;
 
+    public OrderUpdateDto(Integer id, Integer flag) {
+        this.id = id;
+        this.flag = flag;
+    }
 }

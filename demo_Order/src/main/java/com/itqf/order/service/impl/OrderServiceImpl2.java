@@ -1,22 +1,26 @@
 package com.itqf.order.service.impl;
 
 import com.itqf.common.common.OrderFlag;
-import com.itqf.common.vo.RedisKeyConfig;
 import com.itqf.common.dto.*;
 import com.itqf.common.thrid.RedissonUtil;
 import com.itqf.common.vo.JsonResult;
+import com.itqf.common.vo.RedisKeyConfig;
 import com.itqf.entity.entity.Order;
 import com.itqf.entity.entity.Orderitem;
+import com.itqf.order.config.RabbitMQConfig;
 import com.itqf.order.dao.OrderDao;
 import com.itqf.order.dao.OrderitemDao;
 import com.itqf.order.service.inte.OrderService;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  * projectName: demo_end
@@ -24,10 +28,10 @@ import java.util.Random;
  * @author: xinxin
  * time:  2020/11/513:14
  * description:
- * 考虑到购物 可能
+ * 订单的第二版接口  利用redis
  */
 @Service
-public class OrderServiceImpl implements OrderService {
+public class OrderServiceImpl2 implements OrderService {
 
     @Autowired
     private OrderDao orderDao ;
@@ -35,6 +39,8 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderitemDao orderitemDao ;
 
+    @Autowired
+    private RabbitTemplate rabbitTemplate ;
 
     /**
      * 商品页面添加商品   单个商品
@@ -46,6 +52,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public JsonResult GoodsAdd(OrderGoodsAdd orderGoodsAdd) {
         Random random = new Random();
+        HashMap<String, Object> map = new HashMap<>();
         //校验参数
         if (orderGoodsAdd!= null && orderGoodsAdd.getAid()>0 && orderGoodsAdd.getSkuid()>0 && orderGoodsAdd.getScount() >0 && orderGoodsAdd.getUid()>0){
             //生成订单  完善订单的信息 id通过生成器生成  在这里可以先随机一个  还有总价  优惠价  最后支付的价格
@@ -66,6 +73,7 @@ public class OrderServiceImpl implements OrderService {
                     tm += pr*orderGoodsAdd.getScount();
                     //将商品详情添加到集合中
                     orderitem = new Orderitem(order.getId(), orderGoodsAdd.getSkuid(), orderGoodsAdd.getScount(), pr);
+                    map.put(orderGoodsAdd.getSkuid()+"" , orderitem);
                 }else {
                     return JsonResult.fail("库存不足");
                 }
@@ -83,18 +91,18 @@ public class OrderServiceImpl implements OrderService {
                 order.setTotalmoney(tm);
                 order.setFreemoney(fm);
                 order.setPaymoney(pm);
-                //订单完善结束  给数据库添加订单
-                if (orderDao.insert(order)>0){
-                    //添加订单详情
-                    if (orderitemDao.insert(orderitem)>0){
-                        //修改商品的库存
-                        return JsonResult.success();
-                    }else {
-                        return JsonResult.fail("系统异常，稍后再试") ;
-                    }
-                }else {
-                    return JsonResult.fail("系统异常，稍后再试") ;
-                }
+                //订单完善结束  给数据库添加订单  将信息添加到redis中
+
+                RedissonUtil.setStr(RedisKeyConfig.ORDER_V2+order.getId(),order);
+                RedissonUtil.setHashAll(RedisKeyConfig.ORDERITEM_V2+order.getId(),map);
+                //设置时间
+                RedissonUtil.setTime(RedisKeyConfig.ORDER_V2+order.getId(),RedisKeyConfig.ORDER_TIME, TimeUnit.HOURS);
+                RedissonUtil.setTime(RedisKeyConfig.ORDERITEM_V2+order.getId(),RedisKeyConfig.ORDER_TIME, TimeUnit.HOURS);
+
+                rabbitTemplate.convertAndSend(RabbitMQConfig.exorder,"",order.getId());
+
+                return JsonResult.success();
+
             } finally {
                 //执行结束释放锁
                 RedissonUtil.unlock(RedisKeyConfig.ORDER_LOCK+orderGoodsAdd.getSkuid());
@@ -123,7 +131,8 @@ public class OrderServiceImpl implements OrderService {
             //生成订单  完善订单的信息 id通过生成器生成  在这里可以先随机一个  还有总价  优惠价  最后支付的价格
             Order order = new Order("ZK" + System.currentTimeMillis() ,orderAddDto.getAid(),orderAddDto.getUid(), OrderFlag.待支付.getVal());
             //对商品集合进行遍历 从数据库中将商品的信息拿出来  在这里进行模拟
-            ArrayList<Orderitem> orderitems = new ArrayList<>();
+//            ArrayList<Orderitem> orderitems = new ArrayList<>();
+            HashMap<String, Object> map = new HashMap<>();
             Double tm = 0.0 ;
             try {
                 //加个锁
@@ -137,7 +146,7 @@ public class OrderServiceImpl implements OrderService {
                         //计算总的价格
                         tm += pr*goodsDto.getScount();
                         //将商品详情添加到集合中
-                        orderitems.add(new Orderitem(order.getId(),goodsDto.getSkuid(),goodsDto.getScount(),pr));
+                        map.put(goodsDto.getSkuid()+"",new Orderitem(order.getId(),goodsDto.getSkuid(),goodsDto.getScount(),pr));
                     }else {
                         return JsonResult.fail("库存不足");
                     }
@@ -158,17 +167,14 @@ public class OrderServiceImpl implements OrderService {
                 order.setFreemoney(fm);
                 order.setPaymoney(pm);
                 //订单完善结束  给数据库添加订单
-                if (orderDao.insert(order)>0){
-                    //添加订单详情
-                    if (orderitemDao.insertBatch(orderitems).length>0){
-                        //修改商品的库存
-                        return JsonResult.success();
-                    }else {
-                        return JsonResult.fail("系统异常，稍后再试") ;
-                    }
-                }else {
-                    return JsonResult.fail("系统异常，稍后再试") ;
-                }
+                RedissonUtil.setStr(RedisKeyConfig.ORDER_V2+order.getId(),order);
+                RedissonUtil.setHashAll(RedisKeyConfig.ORDERITEM_V2+order.getId(),map);
+                //设置时间
+                RedissonUtil.setTime(RedisKeyConfig.ORDER_V2+order.getId(),RedisKeyConfig.ORDER_TIME, TimeUnit.HOURS);
+                RedissonUtil.setTime(RedisKeyConfig.ORDERITEM_V2+order.getId(),RedisKeyConfig.ORDER_TIME, TimeUnit.HOURS);
+
+                rabbitTemplate.convertAndSend(RabbitMQConfig.exorder,"",order.getId());
+                return JsonResult.success();
             } finally {
                 //执行结束释放锁
                 RedissonUtil.unlock(RedisKeyConfig.ORDER_LOCK+orderAddDto.getSkuids());

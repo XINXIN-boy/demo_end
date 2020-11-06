@@ -6,7 +6,11 @@ import com.itqf.common.vo.JsonResult;
 import com.itqf.order.service.inte.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
+
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController {
 
     @Autowired
+    @Qualifier(value = "orderServiceImpl2")
     private OrderService orderService ;
 
     @ApiOperation(value = "商品页添加")
