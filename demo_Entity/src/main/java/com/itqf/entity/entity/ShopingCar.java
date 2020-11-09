@@ -1,6 +1,7 @@
 package com.itqf.entity.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -12,6 +13,7 @@ import java.util.Date;
  * description:
  */
 @Data
+@NoArgsConstructor
 public class ShopingCar {
 
     private Integer id ;

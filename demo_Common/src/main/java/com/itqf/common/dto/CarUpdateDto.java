@@ -14,7 +14,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class CarUpdateDto {
 
-    private Integer id ;
-    private Integer scount ;  //计数
+    private int uid;
+    private int skuid;
+    private int scount;//+ 正数  - 负数
 
 }

@@ -14,6 +14,8 @@ public class RedisKeyConfig {
 
     //订单分布式锁的
     public static final String ORDER_LOCK = "order:lock:" ;  //加skuid
+    public static final long CART_TIME =25 ;
+
     public static int LOCK_TIME=3;
 
     //存储订单信息 String类型  -有效期2小时
@@ -22,6 +24,9 @@ public class RedisKeyConfig {
     public static String ORDERITEM_V2="order:item:";//订单id
     //订单数据 有效期2小时
     public static int ORDER_TIME=2;
+
+    //购物车的相关
+    public static final String  CART_KEY = "cart:user:"; //后接uid作为key  值存储的skuid
 
 
 }
