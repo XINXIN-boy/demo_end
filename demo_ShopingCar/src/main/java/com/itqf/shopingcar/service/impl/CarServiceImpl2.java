@@ -9,9 +9,6 @@ import com.itqf.shopingcar.service.inte.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-
 /**
  * projectName: demo_end
  *
@@ -20,7 +17,7 @@ import java.util.LinkedList;
  * description:
  */
 @Service
-public class CarServiceImpl implements CarService {
+public class CarServiceImpl2 implements CarService {
 
     @Autowired
     private CarDao carDao ;

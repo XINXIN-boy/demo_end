@@ -18,9 +18,9 @@ public interface CarService {
     //购物车的删除
     JsonResult del (int id);
     //购物车数量的+
-    JsonResult plus(CarUpdateDto dto);
+    JsonResult plus(int id);
     //购物车数量的—
-    JsonResult subtract(CarUpdateDto dto);
+    JsonResult subtract(int id);
 
 
 }

@@ -8,6 +8,8 @@
         <module>demo_Common</module>
         <module>demo_Entity</module>
         <module>demo_Order</module>
+        <module>demo_Goods</module>
+        <module>demo_Hot</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

@@ -24,7 +24,7 @@ import java.util.List;
  * description:
  */
 @Component
-@RabbitListener(queues = "cloud-order-sync")
+//@RabbitListener(queues = "cloud-order-sync")
 public class OrderSynListener {
     @Autowired
     private OrderDao orderDao;
@@ -40,7 +40,7 @@ public class OrderSynListener {
         if(RedissonUtil.checkKey(k1,k2)){
 
             Order order= (Order) RedissonUtil.getStrObj(k1);
-
+    
             orderDao.insert(order);
 
             Collection<Object> items= RedissonUtil.getHash(k2);
